@@ -1,6 +1,6 @@
 # ps5-bar-tool
 
-PS5 BAR Save Extractor is a fork of ps5-bar-tool focused on recovering PS4 and PS5 save data from official PS5 Backup & Restore archives (archive.dat) stored on USB. It allows save files to be extracted without performing a full system restore or formatting/replacing the current console state.
+PS5 BAR Save Extractor is a fork of ps5-bar-tool focused on recovering PS4 and PS5 save data from official PS5 Backup & Restore archives (archive.dat) stored on USB. It allows save files to be extracted without performing a full system restore or formatting/replacing the current console state also without losing the jailbreak state of the ps5.
 
 ## Credits
 
