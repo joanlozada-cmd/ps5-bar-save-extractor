@@ -1,10 +1,6 @@
 # ps5-bar-tool
 
-PS5 implements a feature called "Backup and Restore" (BAR) to allow users to move or save users and apps information.
-
-This payload let's you visualize the information of any BAR file and dump the embedded file system using the PS5 as oracle.
-
-This is WIP.
+PS5 BAR Save Extractor is a fork of ps5-bar-tool focused on recovering PS4 and PS5 save data from official PS5 Backup & Restore archives (archive.dat) stored on USB. It allows save files to be extracted without performing a full system restore or formatting/replacing the current console state.
 
 ## Credits
 
