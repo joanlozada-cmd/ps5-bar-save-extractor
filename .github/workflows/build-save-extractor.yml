@@ -1,0 +1,54 @@
+name: Build PS5 BAR Save Extractor
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "Makefile"
+      - "include/**"
+      - "source/**"
+      - ".github/workflows/build-save-extractor.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+
+      - name: Checkout PS5 Payload SDK v0.42
+        uses: actions/checkout@v4
+        with:
+          repository: ps5-payload-dev/sdk
+          ref: v0.42
+          path: .ps5-sdk-src
+
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bash clang-18 lld-18 make wget file
+
+      - name: Install PS5 Payload SDK
+        working-directory: .ps5-sdk-src
+        run: |
+          make DESTDIR="${RUNNER_TEMP}/ps5-payload-sdk" clean install
+          echo "PS5_PAYLOAD_SDK=${RUNNER_TEMP}/ps5-payload-sdk" >> "$GITHUB_ENV"
+
+      - name: Build all payloads
+        run: |
+          make clean all
+          file bin/*.elf
+
+      - name: Hash save extractor
+        run: |
+          sha256sum bin/ps5-bar-save-extractor.elf | tee bin/ps5-bar-save-extractor.elf.sha256
+
+      - name: Upload save extractor
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps5-bar-save-extractor
+          path: |
+            bin/ps5-bar-save-extractor.elf
+            bin/ps5-bar-save-extractor.elf.sha256
+          if-no-files-found: error
